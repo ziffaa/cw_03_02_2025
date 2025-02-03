@@ -32,11 +32,20 @@ int wordCount(_TCHAR str[])
 {
     int len = _tcslen(str);
     int count = 0;
+    bool inWord = false;
     
     for (int i = 0; i < len; i++)
     {
-        if (str[i] == _T(' ') || str[i] == _T(',') || str[i] == _T('.') || str[i] == _T(';') || str[i] == _T('-'))
+        if ((str[i] == _T(' ') || str[i] == _T(',') || str[i] == _T('.') || str[i] == _T(';') || str[i] == _T('\0')))
         {
+            if (inWord)
+            {
+                inWord = false;
+            }
+        }
+        else if (!inWord)
+        {
+            inWord = true;
             count++;
         }
     }
