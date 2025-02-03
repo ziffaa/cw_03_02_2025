@@ -1,15 +1,15 @@
-// определение символической константы _UNICODE
+// РѕРїСЂРµРґРµР»РµРЅРёРµ СЃРёРјРІРѕР»РёС‡РµСЃРєРѕР№ РєРѕРЅСЃС‚Р°РЅС‚С‹ _UNICODE
 #define _CRT_SECURE_NO_WARNINGS
 #define _UNICODE
 
 #include <iostream>
-#include <tchar.h>// для макросов windows
+#include <tchar.h>// РґР»СЏ РјР°РєСЂРѕСЃРѕРІ windows
 
-//1.  пользователь вводит строку.проверить, является ли эта строка палиндромом.
-//2.   подсчитать количество слов во введенном предложении.
-//3.  пользователь вводит текст, строку для поиска и строку для замены.реализовать поиск в тексте заданной строки и замены ее на заданную подстроку.
+//1.  РїРѕР»СЊР·РѕРІР°С‚РµР»СЊ РІРІРѕРґРёС‚ СЃС‚СЂРѕРєСѓ.РїСЂРѕРІРµСЂРёС‚СЊ, СЏРІР»СЏРµС‚СЃСЏ Р»Рё СЌС‚Р° СЃС‚СЂРѕРєР° РїР°Р»РёРЅРґСЂРѕРјРѕРј.
+//2.   РїРѕРґСЃС‡РёС‚Р°С‚СЊ РєРѕР»РёС‡РµСЃС‚РІРѕ СЃР»РѕРІ РІРѕ РІРІРµРґРµРЅРЅРѕРј РїСЂРµРґР»РѕР¶РµРЅРёРё.
+//3.  РїРѕР»СЊР·РѕРІР°С‚РµР»СЊ РІРІРѕРґРёС‚ С‚РµРєСЃС‚, СЃС‚СЂРѕРєСѓ РґР»СЏ РїРѕРёСЃРєР° Рё СЃС‚СЂРѕРєСѓ РґР»СЏ Р·Р°РјРµРЅС‹.СЂРµР°Р»РёР·РѕРІР°С‚СЊ РїРѕРёСЃРє РІ С‚РµРєСЃС‚Рµ Р·Р°РґР°РЅРЅРѕР№ СЃС‚СЂРѕРєРё Рё Р·Р°РјРµРЅС‹ РµРµ РЅР° Р·Р°РґР°РЅРЅСѓСЋ РїРѕРґСЃС‚СЂРѕРєСѓ.
 //
-//при выполнении использовать только макросы(<tchar.h>)
+//РїСЂРё РІС‹РїРѕР»РЅРµРЅРёРё РёСЃРїРѕР»СЊР·РѕРІР°С‚СЊ С‚РѕР»СЊРєРѕ РјР°РєСЂРѕСЃС‹(<tchar.h>)
 
 using namespace std;
 
@@ -47,15 +47,16 @@ void replaceSubstring(_TCHAR str[], const _TCHAR sub[], const _TCHAR replace[])
 {
     int strLen = _tcslen(str);
     int subLen = _tcslen(sub);
-    int newLen = _tcslen(str) - _tcslen(sub) + _tcslen(replace) + 1;
+    int newLen = _tcslen(str);
 
     _TCHAR* p = str;
     _TCHAR* found = NULL;
 
     while ((found = _tcsstr(p, sub)))
     {
-        _TCHAR* newStr = new _TCHAR[newLen];
-        int offset = strLen - _tcslen(found);
+        newLen = newLen - subLen + _tcslen(replace);
+        int offset = found - str;
+        _TCHAR* newStr = new _TCHAR[newLen + 1];
         _tcsncpy(newStr, str, offset);
         newStr[offset] = _T('\0');
         _tcscat(newStr, replace);
@@ -83,7 +84,7 @@ void main()
     _tcscpy(szBuf3, _T("hello, world!"));
     wcout << _T("The string \"") << szBuf3 << _T("\" contains ") << wordCount(szBuf3) << _T(" word(s).") << endl;
 
-    replaceSubstring(szBuf3, _T("o"), _T("ba"));
+    replaceSubstring(szBuf3, _T("hello"), _T("goodbye"));
 
     wcout << szBuf3 << endl;
 }
